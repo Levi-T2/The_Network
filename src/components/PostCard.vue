@@ -18,7 +18,7 @@
     <div>
         <p>
             <span>
-                <i class="mdi mdi-heart-outline"></i>
+                <i role="button" @click="likePost(post.id)" class="mdi mdi-heart-outline"></i>
             </span>
             {{ post.likes.length }}
         </p>
@@ -29,6 +29,9 @@
 <script>
 import { RouterLink } from 'vue-router';
 import { Post } from '../models/Post';
+import Pop from '../utils/Pop';
+import { logger } from '../utils/Logger';
+import { postService } from '../services/PostService';
 
 
 export default {
@@ -36,7 +39,17 @@ export default {
         post: { type: Post, required: true }
     },
     setup() {
-        return {};
+        return {
+            async likePost(postId) {
+                try {
+                    logger.log('Liked this Post:', postId)
+                    await postService.likePost(postId)
+                    await postService.getPosts()
+                } catch (error) {
+                    Pop.error(error)
+                }
+            }
+        };
     },
     components: { RouterLink }
 };

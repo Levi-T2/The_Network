@@ -10,5 +10,9 @@ export const AppState = reactive({
 
   ads: [],
 
-  profile: null
+  profile: null,
+
+  currentPage: 0,
+
+  totalPages: 0,
 })
