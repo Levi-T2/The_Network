@@ -1,5 +1,5 @@
 <template>
-    <div class="border-btm">
+    <div class="border-btm d-flex justify-content-between align-items-center">
         <RouterLink :to="{ name: 'Profile', params: { profileId: post.creator.id } }">
             <p>
                 <span class="p-2">
@@ -8,6 +8,18 @@
                 {{ post.creator.name }}
             </p>
         </RouterLink>
+        <div v-if="post.creatorId == account.id">
+            <!-- NOTE add  data-bs-toggle="modal" data-bs-target="#postFormModal" if have time -->
+            <button @click="notDone()" class="btn btn-dark-outline">
+                <i class="mdi mdi-pen"></i>
+            </button>
+            <button @click="destroyPost(post.id)" class="btn btn-close"></button>
+        </div>
+    </div>
+    <div class="border-btm p-1">
+        <p class="mb-0">
+            Date Created At: {{ post.createdAt.toLocaleDateString() }}
+        </p>
     </div>
     <div class="text-end">
         <p class="p-2 text-start">
@@ -32,6 +44,8 @@ import { Post } from '../models/Post';
 import Pop from '../utils/Pop';
 import { logger } from '../utils/Logger';
 import { postService } from '../services/PostService';
+import { computed } from 'vue';
+import { AppState } from '../AppState';
 
 
 export default {
@@ -40,10 +54,30 @@ export default {
     },
     setup() {
         return {
+            account: computed(() => AppState.account),
+            notDone() {
+                Pop.toast('Method Not Yet Implemented')
+            },
             async likePost(postId) {
                 try {
                     logger.log('Liked this Post:', postId)
+                    if (this.account.id == null) {
+                        Pop.toast('You Must Be Logged In To Like Posts!')
+                        return
+                    }
                     await postService.likePost(postId)
+                    await postService.getPosts()
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
+            async destroyPost(postId) {
+                try {
+                    const wantsToDelete = await Pop.confirm('Are You Certain You Want To Delete Your Post?')
+                    if (!wantsToDelete) {
+                        return;
+                    }
+                    await postService.destroyPost(postId)
                     await postService.getPosts()
                 } catch (error) {
                     Pop.error(error)

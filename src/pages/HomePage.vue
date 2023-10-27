@@ -3,10 +3,10 @@
     <section class="row">
       <div class="col-12 d-flex">
         <section class="row mx-5">
-          <div class="col-12 col-md-9 p-1 d-flex justify-content-between">
+          <div class="col-12 col-md-11 p-1 d-flex justify-content-between">
             <PageChanger></PageChanger>
           </div>
-          <div v-for="post in posts" :key="post.id" class="col-12 col-md-9 post-card g-2">
+          <div v-for="post in posts" :key="post.id" class="col-12 col-md-11 post-card g-3">
             <PostCard :post="post"></PostCard>
           </div>
         </section>
@@ -20,6 +20,7 @@
       </div>
     </section>
   </div>
+  <PostFormModal></PostFormModal>
 </template>
 
 <script>
@@ -30,6 +31,7 @@ import { AppState } from "../AppState.js";
 import PostCard from '../components/PostCard.vue';
 import { adService } from '../services/AdService'
 import PageChanger from '../components/PageChanger.vue';
+import PostFormModal from '../components/PostFormModal.vue';
 
 export default {
   setup() {
@@ -57,7 +59,7 @@ export default {
       ads: computed(() => AppState.ads)
     };
   },
-  components: { PostCard, PageChanger }
+  components: { PostCard, PageChanger, PostFormModal }
 }
 </script>
 

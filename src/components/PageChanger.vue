@@ -14,6 +14,7 @@ import { computed } from 'vue';
 import { AppState } from '../AppState';
 import Pop from '../utils/Pop';
 import { postService } from '../services/PostService';
+import { adService } from '../services/AdService';
 
 export default {
     setup() {
@@ -23,6 +24,7 @@ export default {
             async changePageOfPosts(pageNumber) {
                 try {
                     await postService.changePageOfPosts(pageNumber)
+                    await adService.getAds()
                 } catch (error) {
                     Pop.error
                 }

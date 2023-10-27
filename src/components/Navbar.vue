@@ -4,6 +4,11 @@
       <i class="mdi mdi-electron-framework"></i>
       <b class="px-1">NetScape</b>
     </router-link>
+    <button v-if="account.id" type="button" class="btn btn-primary rounded-pill" data-bs-toggle="modal"
+      data-bs-target="#postFormModal">
+      Create Post
+      <i class="mdi mdi-plus"></i>
+    </button>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -20,10 +25,14 @@
 </template>
 
 <script>
+import { computed } from 'vue';
 import Login from './Login.vue';
+import { AppState } from '../AppState';
 export default {
   setup() {
-    return {}
+    return {
+      account: computed(() => AppState.account)
+    }
   },
   components: { Login }
 }
