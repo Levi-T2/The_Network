@@ -1,11 +1,13 @@
 <template>
     <div class="border-btm">
-        <p>
-            <span class="p-2">
-                <img :src="post.creator.picture" alt="creator_avatar" class="creator-img rounded-circle">
-            </span>
-            {{ post.creator.name }}
-        </p>
+        <RouterLink :to="{ name: 'Profile', params: { profileId: post.creator.id } }">
+            <p>
+                <span class="p-2">
+                    <img :src="post.creator.picture" alt="creator_avatar" class="creator-img rounded-circle">
+                </span>
+                {{ post.creator.name }}
+            </p>
+        </RouterLink>
     </div>
     <div class="text-end">
         <p class="p-2 text-start">
@@ -25,6 +27,7 @@
 
 
 <script>
+import { RouterLink } from 'vue-router';
 import { Post } from '../models/Post';
 
 
@@ -33,8 +36,9 @@ export default {
         post: { type: Post, required: true }
     },
     setup() {
-        return {}
-    }
+        return {};
+    },
+    components: { RouterLink }
 };
 </script>
 
@@ -45,7 +49,7 @@ export default {
     width: 12rem;
     background-position: center;
     object-fit: cover;
-    border-radius: 2px;
+    border-radius: 3px;
 }
 
 .creator-img {
