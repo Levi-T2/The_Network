@@ -10,27 +10,31 @@
                     <form @submit.prevent="editAccount()">
                         <div class="mb-3">
                             <label for="accountName" class="form-label">Account Name</label>
-                            <input type="text" class="form-control" id="accountName">
+                            <input v-model="editable.name" type="text" class="form-control" id="accountName">
                         </div>
                         <div class="mb-3">
                             <label for="accountBio" class="form-label">Account Bio</label>
-                            <input type="text" class="form-control" id="accountBio">
+                            <input v-model="editable.bio" type="text" class="form-control" id="accountBio">
+                        </div>
+                        <div class="mb-3">
+                            <label for="accountClass" class="form-label">Class</label>
+                            <input v-model="editable.class" type="text" class="form-control" id="accountClass">
                         </div>
                         <div class="mb-3">
                             <label for="avatarImg" class="form-label">Avatar Image</label>
-                            <input type="url" class="form-control" id="avatarImg">
+                            <input v-model="editable.picture" type="url" class="form-control" id="avatarImg">
                         </div>
                         <div class="mb-3">
                             <label for="coverImg" class="form-label">Cover Image</label>
-                            <input type="url" class="form-control" id="coverImg">
+                            <input v-model="editable.coverImg" type="url" class="form-control" id="coverImg">
                         </div>
                         <div class="mb-3">
                             <label for="accountGithub" class="form-label">GitHub Link</label>
-                            <input type="url" class="form-control" id="accountGithub">
+                            <input v-model="editable.github" type="url" class="form-control" id="accountGithub">
                         </div>
                         <div class="mb-3">
                             <label for="accountLinkedIn" class="form-label">Link to LinkedIn</label>
-                            <input type="url" class="form-control" id="accountLinkedIn">
+                            <input v-model="editable.linkedin" type="url" class="form-control" id="accountLinkedIn">
                         </div>
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                     </form>
@@ -44,15 +48,20 @@
 
 
 <script>
-import { computed, ref } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import Pop from '../utils/Pop';
 import { AppState } from '../AppState';
 import { accountService } from '../services/AccountService';
+import { Modal } from 'bootstrap';
 
 
 export default {
     setup() {
-        const editable = ref({})
+        const editable = ref({});
+
+        watchEffect(() => {
+            editable.value = AppState.account;
+        })
         return {
             editable,
             account: computed(() => AppState.account),
@@ -60,6 +69,7 @@ export default {
                 try {
                     const accountData = editable.value;
                     await accountService.editAccount(accountData)
+                    Modal.getOrCreateInstance('#editAccountModal').hide()
                 } catch (error) {
                     Pop.error()
                 }

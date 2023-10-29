@@ -9,6 +9,7 @@ export class Account {
     this.github = data.github
     this.linkedin = data.linkedin
     this.coverImg = data.coverImg
+    this.class = data.class
 
   }
 }
