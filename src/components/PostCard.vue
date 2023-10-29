@@ -6,6 +6,7 @@
                     <img :src="post.creator.picture" alt="creator_avatar" class="creator-img rounded-circle">
                 </span>
                 {{ post.creator.name }}
+                <i v-if="post.creator.graduated == true" class="mdi mdi-school p-1 fs-5"></i>
             </p>
         </RouterLink>
         <div v-if="post.creatorId == account.id">
@@ -18,7 +19,7 @@
     </div>
     <div class="border-btm p-1">
         <p class="mb-0">
-            Date Created At: {{ post.createdAt.toLocaleDateString() }}
+            Date Posted At: {{ post.createdAt.toLocaleDateString() }}
         </p>
     </div>
     <div class="text-end">

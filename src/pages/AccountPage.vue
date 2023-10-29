@@ -3,23 +3,7 @@
     <section :style="{ backgroundImage: 'url(' + accountImg + ')' }"
       class="row cover-bg m-0 justify-content-center align-items-center">
       <div class="col-8 account-card d-flex align-items-center">
-        <div class="p-3">
-          <img :src="account.picture" alt="Account_Picture" class="avatar-img rounded-circle">
-        </div>
-        <div class="p-3">
-          <p>Username: {{ account.name }}</p>
-          <p>Email: {{ account.email }}</p>
-          <p>Bio: {{ account.bio }}</p>
-          <p>Class: {{ account.class }}</p>
-          <a v-if="account.github" class="mdi mdi-github p-5 fs-2" role="button" :href="account.github"
-            :title="account.github"></a>
-          <a v-if="account.linkedin" class="mdi mdi-linkedin p-5 fs-2" role="button" :href="account.linkedin"
-            :title="account.linkedin"></a>
-        </div>
-        <div class="p-4">
-          <button data-bs-toggle="modal" data-bs-target="#editAccountModal" class="btn rounded-pill btn-primary">Edit
-            Account</button>
-        </div>
+        <AccountDetails :account="account"></AccountDetails>
       </div>
     </section>
   </div>
@@ -30,6 +14,7 @@
 import { computed } from 'vue';
 import { AppState } from '../AppState';
 import EditAccountModal from '../components/EditAccountModal.vue';
+import AccountDetails from '../components/AccountDetails.vue';
 export default {
   setup() {
     return {
@@ -37,7 +22,7 @@ export default {
       accountImg: computed(() => AppState.account.coverImg)
     };
   },
-  components: { EditAccountModal }
+  components: { EditAccountModal, AccountDetails }
 }
 </script>
 
@@ -54,7 +39,7 @@ export default {
   background-size: cover;
   background-position: center;
   padding: 0rem;
-  border-bottom: 5px solid rgb(105, 105, 105);
+  border-bottom: 5px ridge rgb(105, 105, 105);
 }
 
 .account-card {
@@ -67,10 +52,5 @@ export default {
   margin: 1rem;
   font-weight: bold;
   color: white;
-}
-
-.avatar-img {
-  height: 12rem;
-  width: 12rem;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <button :disabled="currentPage <= 1" class="btn btn-dark-outline" @click="changePageOfPosts(currentPage - 1)">Previous
         Page</button>
-    <p>
+    <p class="mb-0">
         {{ currentPage }} of {{ totalPages }}
     </p>
     <button :disabled="currentPage == totalPages" class="btn btn-dark-outline"

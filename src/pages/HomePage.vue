@@ -3,7 +3,7 @@
     <section class="row">
       <div class="col-12 d-flex">
         <section class="row mx-5">
-          <div class="col-12 col-md-11 p-1 d-flex justify-content-between">
+          <div class="col-12 col-md-11 p-3 d-flex justify-content-between">
             <PageChanger></PageChanger>
           </div>
           <div v-for="post in posts" :key="post.id" class="col-12 col-md-11 post-card g-3">
