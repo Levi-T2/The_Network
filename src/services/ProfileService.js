@@ -16,6 +16,8 @@ class ProfileService {
         const res = await api.get(`api/posts?creatorId=${profileId}`)
         logger.log(res.data)
         AppState.posts = res.data.posts.map((posts) => new Post(posts))
+        AppState.currentPage = res.data.page
+        AppState.totalPages = res.data.totalPages
     }
 }
 

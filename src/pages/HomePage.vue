@@ -10,7 +10,7 @@
             <PostCard :post="post"></PostCard>
           </div>
         </section>
-        <section class="row flex-column">
+        <section class="row flex-column ad-section">
           <div v-for="ad in ads" :key="ad.title" class="col-12 p-2 ad-mobile">
             <div>
               <img :src="ad.square" alt="ad" :title="ad.title" class="ad-img">
@@ -36,9 +36,17 @@ import PostFormModal from '../components/PostFormModal.vue';
 export default {
   setup() {
     onMounted(() => {
+      clearAppStateData();
       getPosts();
       getAds();
     });
+    function clearAppStateData() {
+      try {
+        postService.clearAppStateData()
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
     async function getPosts() {
       try {
         await postService.getPosts();
@@ -76,6 +84,10 @@ export default {
   width: 10rem;
   background-position: center;
   object-fit: cover;
+}
+
+.ad-section {
+  border-left: 5px ridge black;
 }
 
 @media (max-width: 768px) {

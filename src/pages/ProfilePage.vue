@@ -5,6 +5,18 @@
                 <ProfileDetails :profile="profile"></ProfileDetails>
             </div>
         </section>
+        <section class="row">
+            <div class="col-12 p-5 d-flex justify-content-between">
+                <button :disabled="currentPage <= 1" class="btn btn-dark-outline"
+                    @click="changePageOfPostsOnProfile(currentPage - 1)">Previous
+                    Page</button>
+                <p class="mb-0">
+                    {{ currentPage }} of {{ totalPages }}
+                </p>
+                <button :disabled="currentPage == totalPages" class="btn btn-dark-outline"
+                    @click="changePageOfPostsOnProfile(currentPage + 1)">Next Page</button>
+            </div>
+        </section>
         <section class="row justify-content-center">
             <p class="p-1s fs-3 fw-bold">This User's Posts</p>
             <div v-for="post in posts" :key="post.id" class="col-12 col-md-8 post-card g-3">
@@ -23,13 +35,22 @@ import { useRoute } from 'vue-router';
 import { AppState } from '../AppState';
 import ProfileDetails from '../components/ProfileDetails.vue';
 import PostCard from '../components/PostCard.vue';
+import { postService } from '../services/PostService';
 
 export default {
     setup() {
         onMounted(() => {
+            clearAppStateData();
             getProfile();
             getPostsByProfileId();
         });
+        function clearAppStateData() {
+            try {
+                postService.clearAppStateData()
+            } catch (error) {
+                Pop.error(error)
+            }
+        }
         const route = useRoute();
         async function getProfile() {
             try {
@@ -50,10 +71,22 @@ export default {
         }
         return {
             profile: computed(() => AppState.profile),
-            posts: computed(() => AppState.posts)
+            posts: computed(() => AppState.posts),
+            currentPage: computed(() => AppState.currentPage),
+            totalPages: computed(() => AppState.totalPages),
+            async changePageOfPostsOnProfile(pageNumber) {
+                try {
+                    const profileId = route.params.profileId
+                    const endpointUrl = `api/posts?creatorId=${profileId}&page=${pageNumber}`
+                    await postService.changePageOfPosts(endpointUrl)
+                } catch (error) {
+                    Pop.error(error)
+                }
+            }
+
         };
     },
-    components: { ProfileDetails, PostCard }
+    components: { ProfileDetails, PostCard, }
 };
 </script>
 
