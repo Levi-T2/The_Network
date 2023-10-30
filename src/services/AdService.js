@@ -1,5 +1,4 @@
 import { api } from "./AxiosService"
-import { logger } from "../utils/Logger"
 import { Ad } from "../models/Ad"
 import { AppState } from "../AppState"
 
@@ -9,7 +8,7 @@ class AdService {
         // logger.log(res.data)
         const newAds = res.data.map(ad => new Ad(ad))
         AppState.ads = newAds
-        logger.log(AppState.ads)
+        // logger.log(AppState.ads)
     }
 }
 export const adService = new AdService()

@@ -1,24 +1,17 @@
 <template>
-    <div class="text-center">
-        <img :src="profile.coverImg" alt="" class="cover-img rounded-top">
-    </div>
-    <div class="p-2">
-        <img :src="profile.picture" alt="" class="creator-img rounded-circle p-2">
-        {{ profile.name }}
-        <i v-if="profile.graduated == true" class="mdi mdi-school p-1 fs-5"></i>
+    <div class="p-3">
+        <img :src="profile.picture" alt="Account_Picture" class="avatar-img rounded-circle">
     </div>
     <div class="p-3">
-        <p>{{ profile.class }}</p>
-        <p>{{ profile.email }}</p>
-        <div class="fs-3">
-            <a v-if="profile.github" class="mdi mdi-github p-1" role="button" :href="profile.github"
-                :title="profile.github"></a>
-            <a v-if="profile.linkedin" class="mdi mdi-linkedin p-1" role="button" :href="profile.linkedin"
-                :title="profile.linkedin"></a>
-        </div>
-    </div>
-    <div class="p-3">
-        <p>{{ profile.bio }}</p>
+        <p>Username: {{ profile.name }}</p>
+        <p>Email: {{ profile.email }}</p>
+        <p v-if="profile.bio">Bio: {{ profile.bio }}</p>
+        <p v-if="profile.class">Class: {{ profile.class }}</p>
+        <a v-if="profile.github" class="mdi mdi-github p-5 fs-2" role="button" :href="profile.github"
+            :title="profile.github"></a>
+        <a v-if="profile.linkedin" class="mdi mdi-linkedin p-5 fs-2" role="button" :href="profile.linkedin"
+            :title="profile.linkedin"></a>
+        <a v-if="profile.graduated == true" class="mdi mdi-school p-5 fs-2" role="button" :title="graduated"></a>
     </div>
 </template>
 
@@ -38,17 +31,16 @@ export default {
 
 
 <style lang="scss" scoped>
-.creator-img {
-    height: 5rem;
-    width: 5rem;
-    background-size: cover;
-    background-position: center;
-    border-radius: 6px;
-}
-
 .cover-img {
     height: 30dvh;
     width: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.avatar-img {
+    height: 12rem;
+    width: 12rem;
     background-size: cover;
     background-position: center;
 }

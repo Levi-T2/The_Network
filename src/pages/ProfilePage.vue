@@ -1,7 +1,8 @@
 <template>
     <div class="container-fluid">
-        <section v-if="profile" class="row justify-content-center">
-            <div class="col-10 profile-card g-3">
+        <section v-if="profile" class="row justify-content-center align-items-center cover-bg"
+            :style="{ backgroundImage: 'url(' + coverImg + ')' }">
+            <div class="col-10 profile-card d-flex align-items-center">
                 <ProfileDetails :profile="profile"></ProfileDetails>
             </div>
         </section>
@@ -19,6 +20,10 @@
         </section>
         <section class="row justify-content-center">
             <p class="p-1s fs-3 fw-bold">This User's Posts</p>
+            <div>
+                <button v-if="totalPages >= 2" class="btn btn-dark" @click="getOlderPostsOnProfile()">Filter By
+                    Oldest</button>
+            </div>
             <div v-for="post in posts" :key="post.id" class="col-12 col-md-8 post-card g-3">
                 <PostCard :post="post"></PostCard>
             </div>
@@ -74,11 +79,26 @@ export default {
             posts: computed(() => AppState.posts),
             currentPage: computed(() => AppState.currentPage),
             totalPages: computed(() => AppState.totalPages),
+            coverImg: computed(() => AppState.profile.coverImg),
             async changePageOfPostsOnProfile(pageNumber) {
                 try {
                     const profileId = route.params.profileId
                     const endpointUrl = `api/posts?creatorId=${profileId}&page=${pageNumber}`
                     await postService.changePageOfPosts(endpointUrl)
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
+            async getOlderPostsOnProfile() {
+                try {
+                    const profileId = route.params.profileId
+                    const lastPage = AppState.totalPages
+                    if (this.currentPage < this.totalPages) {
+                        await postService.getOlderPostsOnProfile(profileId, lastPage)
+                    } else {
+                        await profileService.getPostsByProfileId(profileId)
+                    }
+
                 } catch (error) {
                     Pop.error(error)
                 }
@@ -93,9 +113,16 @@ export default {
 
 <style lang="scss" scoped>
 .profile-card {
-    border: 3px solid black;
-    border-radius: 8px;
-    padding: 0rem;
+    background-color: rgba(61, 61, 61, 0.49);
+    backdrop-filter: blur(6px);
+    border-radius: 10px;
+    box-shadow: 0px 2px 12px 2px #111111;
+    height: 56dvh;
+    width: 55em;
+    margin: 1rem;
+    font-weight: bold;
+    color: white;
+    overflow-y: scroll;
 }
 
 .post-card {
@@ -103,5 +130,13 @@ export default {
     padding: 1rem;
     box-shadow: 0px 0px 7.5px 2px #3D3D3D;
     border-radius: 10px;
+}
+
+.cover-bg {
+    height: 62dvh;
+    background-size: cover;
+    background-position: center;
+    padding: 0rem;
+    border-bottom: 5px ridge rgb(105, 105, 105);
 }
 </style>

@@ -15,6 +15,18 @@ class PostService {
         AppState.currentPage = res.data.page
         AppState.totalPages = res.data.totalPages
     }
+    async getOlderPosts(lastPage) {
+        const res = await api.get(`api/posts?page=${lastPage}`)
+        const newPosts = res.data.posts.map(posts => new Post(posts))
+        AppState.posts = newPosts
+        AppState.currentPage = res.data.page
+    }
+    async getOlderPostsOnProfile(profileId, lastPage) {
+        const res = await api.get(`api/posts?creatorId=${profileId}&page=${lastPage}`)
+        const newPosts = res.data.posts.map(posts => new Post(posts))
+        AppState.posts = newPosts
+        AppState.currentPage = res.data.page
+    }
     async changePageOfPosts(endpointUrl) {
         const res = await api.get(endpointUrl)
         const newPosts = res.data.posts.map(posts => new Post(posts))

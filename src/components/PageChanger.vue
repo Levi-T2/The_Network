@@ -1,16 +1,16 @@
 <template>
-    <button v-if="searchQuery == ''" :disabled="currentPage <= 1" class="btn btn-dark-outline"
+    <button v-if="searchQuery == ''" :disabled="currentPage <= 1" class="btn btn-dark"
         @click="changePageOfPosts(currentPage - 1)">Previous
         Page</button>
-    <button v-else :disabled="currentPage <= 1" class="btn btn-dark-outline"
+    <button v-else :disabled="currentPage <= 1" class="btn btn-dark"
         @click="changePageOfPostsWithSearch(currentPage - 1)">Previous
         Page</button>
     <p class="mb-0">
         {{ currentPage }} of {{ totalPages }}
     </p>
-    <button v-if="searchQuery == ''" :disabled="currentPage == totalPages" class="btn btn-dark-outline"
+    <button v-if="searchQuery == ''" :disabled="currentPage == totalPages" class="btn btn-dark"
         @click="changePageOfPosts(currentPage + 1)">Next Page</button>
-    <button v-else :disabled="currentPage == totalPages" class="btn btn-dark-outline"
+    <button v-else :disabled="currentPage == totalPages" class="btn btn-dark"
         @click="changePageOfPostsWithSearch(currentPage + 1)">Next Page</button>
 </template>
 
@@ -31,24 +31,26 @@ export default {
             searchQuery: computed(() => AppState.searchQuery),
             async changePageOfPosts(pageNumber) {
                 try {
-                    const endpointUrl = `api/posts?page=${pageNumber}`
-                    await postService.changePageOfPosts(endpointUrl)
-                    await adService.getAds()
-                } catch (error) {
-                    Pop.error
+                    const endpointUrl = `api/posts?page=${pageNumber}`;
+                    await postService.changePageOfPosts(endpointUrl);
+                    await adService.getAds();
+                }
+                catch (error) {
+                    Pop.error;
                 }
             },
             async changePageOfPostsWithSearch(pageNumber) {
                 try {
-                    const searchQuery = AppState.searchQuery
-                    const endpointUrl = `api/posts?page=${pageNumber}&query=${searchQuery}`
-                    await postService.changePageOfPosts(endpointUrl)
-                } catch (error) {
-                    Pop.error(error)
+                    const searchQuery = AppState.searchQuery;
+                    const endpointUrl = `api/posts?page=${pageNumber}&query=${searchQuery}`;
+                    await postService.changePageOfPosts(endpointUrl);
+                }
+                catch (error) {
+                    Pop.error(error);
                 }
             },
-        }
-    }
+        };
+    },
 };
 </script>
 

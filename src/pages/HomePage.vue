@@ -3,8 +3,9 @@
     <section class="row">
       <div class="col-12 d-flex">
         <section class="row mx-5">
-          <div class="col-12 col-md-11 p-3 d-flex justify-content-between">
+          <div class="col-12 col-md-11 p-3 d-flex justify-content-between align-items-center">
             <PageChanger></PageChanger>
+            <DateToggle></DateToggle>
           </div>
           <div v-for="post in posts" :key="post.id" class="col-12 col-md-11 post-card g-3">
             <PostCard :post="post"></PostCard>
@@ -12,9 +13,9 @@
         </section>
         <section class="row flex-column ad-section">
           <div v-for="ad in ads" :key="ad.title" class="col-12 p-2 ad-mobile">
-            <div>
+            <a>
               <img :src="ad.square" alt="ad" :title="ad.title" class="ad-img">
-            </div>
+            </a>
           </div>
         </section>
       </div>
@@ -32,6 +33,7 @@ import PostCard from '../components/PostCard.vue';
 import { adService } from '../services/AdService'
 import PageChanger from '../components/PageChanger.vue';
 import PostFormModal from '../components/PostFormModal.vue';
+import DateToggle from '../components/DateToggle.vue';
 
 export default {
   setup() {
@@ -64,10 +66,10 @@ export default {
     }
     return {
       posts: computed(() => AppState.posts),
-      ads: computed(() => AppState.ads)
+      ads: computed(() => AppState.ads),
     };
   },
-  components: { PostCard, PageChanger, PostFormModal }
+  components: { PostCard, PageChanger, PostFormModal, DateToggle }
 }
 </script>
 

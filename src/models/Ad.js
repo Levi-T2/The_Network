@@ -5,5 +5,6 @@ export class Ad {
         this.banner = data.banner
         this.square = data.square
         this.tall = data.tall
+        this.linkUrl = data.linkURL
     }
 }
