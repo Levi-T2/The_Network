@@ -14,7 +14,7 @@
       <RouterLink :to="{ name: 'Search' }">
         <p class="mb-0 navbar-links mx-2">Search Posts</p>
       </RouterLink>
-      <p class="mb-0 navbar-links mx-2">Search Users</p>
+      <!-- <p class="mb-0 navbar-links mx-2">Search Users</p> -->
       <div class="p-3">
         <button v-if="account.id" type="button" class="btn btn-navbar rounded-pill" data-bs-toggle="modal"
           data-bs-target="#postFormModal">

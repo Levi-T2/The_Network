@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <section class="row">
       <div class="col-12 d-flex">
-        <section class="row mx-5">
+        <section class="row mx-4">
           <div class="col-12 col-md-11 p-3 d-flex justify-content-between align-items-center">
             <PageChanger></PageChanger>
             <DateToggle></DateToggle>
@@ -96,5 +96,10 @@ export default {
   .ad-mobile {
     display: none;
   }
+
+  .ad-section {
+    display: none;
+  }
+
 }
 </style>
