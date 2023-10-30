@@ -12,6 +12,7 @@
           </div>
         </section>
         <section class="row flex-column ad-section">
+          <!-- TODO make sure ads are on every page -->
           <div v-for="ad in ads" :key="ad.title" class="col-12 p-2 ad-mobile">
             <a>
               <img :src="ad.square" alt="ad" :title="ad.title" class="ad-img">

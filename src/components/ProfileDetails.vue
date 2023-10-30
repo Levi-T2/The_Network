@@ -11,7 +11,9 @@
             :title="profile.github"></a>
         <a v-if="profile.linkedin" class="mdi mdi-linkedin p-5 fs-2" role="button" :href="profile.linkedin"
             :title="profile.linkedin"></a>
-        <a v-if="profile.graduated == true" class="mdi mdi-school p-5 fs-2" role="button" :title="graduated"></a>
+        <i v-if="profile.graduated == true" class="mdi mdi-school p-5 fs-2" role="button" :title="graduated"></i>
+        <a v-if="profile.resume" class="mdi mdi-file-account p-5 fs-2" role="button" :title="profile.resume"
+            :href="profile.resume"></a>
     </div>
 </template>
 
